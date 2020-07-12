@@ -1,6 +1,7 @@
 package com.aprilsapps.springwebbapp.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 // tells hibernate it's an entity. so we need a primary
@@ -18,9 +19,14 @@ public class Author {
     // many to many relationship to books that is going to be
     // mapped by authors
     @ManyToMany(mappedBy = "authors")
-    private Set<Book> books;
+    private Set<Book> books = new HashSet<>();
 
     public Author() {}
+
+    public Author(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
     public Author(String firstName, String lastName, Set<Book> books) {
         this.firstName = firstName;
