@@ -1,6 +1,7 @@
 package com.aprilsapps.springwebbapp.domain;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,6 +12,17 @@ public class Book {
     private Long id;
     private String title;
     private String isbn;
+
+    @ManyToOne
+    private  Publisher publisher;
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
 
     @ManyToMany
     @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"),
@@ -62,5 +74,16 @@ public class Book {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    @ManyToMany
+    private Collection<Publisher> publishers;
+
+    public Collection<Publisher> getPublishers() {
+        return publishers;
+    }
+
+    public void setPublishers(Collection<Publisher> publishers) {
+        this.publishers = publishers;
     }
 }
