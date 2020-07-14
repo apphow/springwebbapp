@@ -5,7 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
 @Controller
+
 public class BookController {
 
     private final BookRepository bookRepository;
@@ -13,12 +15,12 @@ public class BookController {
     public BookController(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
-// map this to url
 
-    @RequestMapping("/books")
+    @RequestMapping(path = "/books")
     public String getBooks(Model model) {
-
         model.addAttribute("books", bookRepository.findAll());
-        return "books";
+        return "books/list";
     }
 }
+
+

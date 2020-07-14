@@ -6,69 +6,30 @@ import java.util.Set;
 
 @Entity
 public class Publisher {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    private String name;
-    private String addressLine;
-    private String city;
-    private String state;
-    private String zip;
-
+    private String street;
+    private Integer houseNumber;
+    private Integer flatNumber;
+    private String postcode;
+    private String town;
+    private String country;
     @OneToMany
     @JoinColumn(name = "publisher_id")
     private Set<Book> books = new HashSet<>();
 
+    public Publisher(String street, Integer houseNumber, Integer flatNumber, String postcode, String town, String country) {
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.flatNumber = flatNumber;
+        this.postcode = postcode;
+        this.town = town;
+        this.country = country;
+    }
+
     public Publisher() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddressLine() {
-        return addressLine;
-    }
-
-    public void setAddressLine(String addressLine) {
-        this.addressLine = addressLine;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getZip() {
-        return zip;
-    }
-
-    public void setZip(String zip) {
-        this.zip = zip;
     }
 
     public Set<Book> getBooks() {
@@ -79,16 +40,72 @@ public class Publisher {
         this.books = books;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public Integer getHouseNumber() {
+        return houseNumber;
+    }
+
+    public void setHouseNumber(Integer houseNumber) {
+        this.houseNumber = houseNumber;
+    }
+
+    public Integer getFlatNumber() {
+        return flatNumber;
+    }
+
+    public void setFlatNumber(Integer flatNumber) {
+        this.flatNumber = flatNumber;
+    }
+
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     @Override
     public String toString() {
         return "Publisher{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", addressLine='" + addressLine + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", zip='" + zip + '\'' +
-                ", books=" + books +
+                ", street='" + street + '\'' +
+                ", houseNumber=" + houseNumber +
+                ", flatNumber=" + flatNumber +
+                ", postcode='" + postcode + '\'' +
+                ", town='" + town + '\'' +
+                ", country='" + country + '\'' +
                 '}';
     }
 
@@ -107,4 +124,3 @@ public class Publisher {
         return id != null ? id.hashCode() : 0;
     }
 }
-

@@ -9,6 +9,8 @@ import com.aprilsapps.springwebbapp.repositories.PublisherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 // when Spring implements this Component, it'll bring it into the Spring context
 // it will do dependency injection into the constructor for an instance of the authorRepository and bookRepository.
 @Component
@@ -27,49 +29,39 @@ public class BootStrapData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        // set up a couple authors and books
+        Book book1 = new Book("Gone with the wind", UUID.randomUUID().toString());
+        Author author1 = new Author("Eric", "Evans");
 
         Publisher publisher = new Publisher();
-        publisher.setName("SFG Publishing");
-        publisher.setName("St. Petersburg");
-        publisher.setState("FL");
 
         publisherRepository.save(publisher);
 
-        Author author1 = new Author("J.K.", "Rowling");
-        Book bb1 = new Book("Harry Potter", "12345678");
-        Publisher pub1 = new Publisher();
-        // add the book to author
-        author1.getBooks().add(bb1);
-        //add the author to book
-        bb1.getAuthors().add(author1);
-        // save both of these in the repository/H2 database
+
+        author1.getBooks().add(book1);
+        book1.getAuthors().add(author1);
+        book1.setPublisher(publisher);
+        publisher.getBooks().add(book1);
+
         authorRepository.save(author1);
-        bookRepository.save(bb1);
-
-        bb1.setPublisher(publisher);
-        publisher.getBooks().add(bb1);
+        bookRepository.save(book1);
         publisherRepository.save(publisher);
 
+        Book book2 = new Book("Too much ado about nothing", UUID.randomUUID().toString());
+        Author author2 = new Author("Barbara", "Higgins");
 
-
-        Author author2 = new Author("Toni", "Morrison");
-        Book bb2 = new Book("Beloved", "12345678");
-
-        author2.getBooks().add(bb2);
-        bb2.getAuthors().add(author2);
-
-        bb2.setPublisher(publisher);
-        publisher.getBooks().add(bb2);
+        author2.getBooks().add(book2);
+        book2.getAuthors().add(author2);
+        book2.setPublisher(publisher);
+        publisher.getBooks().add(book2);
 
         authorRepository.save(author2);
-        bookRepository.save(bb2);
+        bookRepository.save(book2);
         publisherRepository.save(publisher);
 
-        System.out.println("Started Bootstrap successfully");
-        System.out.println("Number of Books: " + bookRepository.count());
-        System.out.println("Number of Authors: " + authorRepository.count());
-        System.out.println("Number of Books per Publisher: " + publisher.getBooks().size());
-
+        System.out.println("Number of saved templates -> " + bookRepository.count());
+        System.out.println("Number of saved authors -> " + authorRepository.count());
+        System.out.println("Number of saved publishers -> " + publisherRepository.count());
+        System.out.println("Number of templates saved to a publisher -> " + publisher.getBooks().size());
+        System.out.println("Details of a created publisher -> " + publisher.toString());
     }
 }

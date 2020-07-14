@@ -1,20 +1,23 @@
 package com.aprilsapps.springwebbapp.domain;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 public class Book {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
     private String isbn;
-
+    @ManyToMany
+    @JoinTable(name = "author_book", joinColumns = @JoinColumn(name="book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
+    private Set<Author> authors = new HashSet<>();
     @ManyToOne
-    private  Publisher publisher;
+    private Publisher publisher;
 
     public Publisher getPublisher() {
         return publisher;
@@ -22,26 +25,6 @@ public class Book {
 
     public void setPublisher(Publisher publisher) {
         this.publisher = publisher;
-    }
-
-    @ManyToMany
-    @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private Set<Author> authors = new HashSet<>();
-
-    public Book() {
-    }
-
-    public Book(String title, String isbn) {
-        this.title = title;
-        this.isbn = isbn;
-
-    }
-
-    public Book(String title, String isbn, Set<Author> authors) {
-        this.title = title;
-        this.isbn = isbn;
-        this.authors = authors;
     }
 
     public Set<Author> getAuthors() {
@@ -60,30 +43,52 @@ public class Book {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public Book(){
+
+    }
+
+    public Book(String title, String isbn) {
+        this.title = title;
+        this.isbn = isbn;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public String getIsbn() {
-        return isbn;
-    }
-
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
-    @ManyToMany
-    private Collection<Publisher> publishers;
-
-    public Collection<Publisher> getPublishers() {
-        return publishers;
+    public String getTitle() {
+        return title;
     }
 
-    public void setPublishers(Collection<Publisher> publishers) {
-        this.publishers = publishers;
+    public String getIsbn() {
+        return isbn;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Book book = (Book) o;
+
+        return id != null ? id.equals(book.id) : book.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", isbn='" + isbn + '\'' +
+                '}';
     }
 }

@@ -7,87 +7,76 @@ import java.util.Set;
 // tells hibernate it's an entity. so we need a primary
 // key for the property (id);
 @Entity
-public class Author {
+public class Author{
+@Id
+@GeneratedValue(strategy = GenerationType.AUTO)
+private Long id;
+private String name;
+private String lastName;
+@ManyToMany(mappedBy = "authors")
+private Set<Book> books = new HashSet<>();
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    private String firstName;
-    private String lastName;
-
-    // many to many relationship to books that is going to be
-    // mapped by authors
-    @ManyToMany(mappedBy = "authors")
-    private Set<Book> books = new HashSet<>();
-
-    public Author() {}
-
-    public Author(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    public Author(String firstName, String lastName, Set<Book> books) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.books = books;
-    }
-
-    public Long getId() {
+public Long getId() {
         return id;
-    }
+        }
 
-    public void setId(Long id) {
+public void setId(Long id) {
         this.id = id;
-    }
+        }
 
-    public String getFirstName() {
-        return firstName;
-    }
+public Author() {
+        }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
+public Author(String name, String lastName) {
+        this.name = name;
         this.lastName = lastName;
-    }
+        }
 
-    public Set<Book> getBooks() {
+public String getName() {
+        return name;
+        }
+
+public void setName(String name) {
+        this.name = name;
+        }
+
+public String getLastName() {
+        return lastName;
+        }
+
+public void setLastName(String lastName) {
+        this.lastName = lastName;
+        }
+
+public Set<Book> getBooks() {
         return books;
-    }
+        }
 
-    public void setBooks(Set<Book> books) {
+public void setBooks(Set<Book> books) {
         this.books = books;
-    }
+        }
 
-    @Override
-    public String toString() {
-        return "Author{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", books=" + books +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
+@Override
+public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Author author = (Author) o;
 
         return id != null ? id.equals(author.id) : author.id == null;
-    }
+        }
 
-    @Override
-    public int hashCode() {
+@Override
+public int hashCode() {
         return id != null ? id.hashCode() : 0;
-    }
-}
+        }
+
+@Override
+public String toString() {
+        return "Author{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", lastName='" + lastName + '\'' +
+        '}';
+        }
+        }
